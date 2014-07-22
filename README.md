@@ -8,6 +8,25 @@ I wrote this because I wanted to play with the relevant API's, mainly I wanted t
 using a Path. It works and the code is pretty clean, so you should be okay if you use it. I don't
 plan to actively maintain this library.
 
+## Why use an icon font?
+
+You can use an icon font instead of PNG assets if you want to support all pixel densities without
+exporting all the slices. You may also take the opportunity to create a single icon font for your
+website and other platforms' apps.
+
+Compared to manually sliced PNG assets, the price you pay is two-fold: you can only use a single
+color and you lose some control over the anti-aliasing. You'll have to see for yourself if this is
+problematic in your icon set and design.
+
+## Where can I get an icon font?
+
+There are a lots of online sites to help you here. The example app in this project uses icons from
+the [FontAwesome][ftaw] project. I've used [icomoon.io][icom] in the past. A web search will turn
+up tons more options.
+
+[ftaw]: https://fortawesome.github.io/Font-Awesome/
+[icom]: http://icomoon.io/
+
 ## Usage
 
 Instances of `IconFontDrawable` are created in Java, usually during `onCreate()`. They need a color,
@@ -64,6 +83,16 @@ Calling any of the setters will invalidate the drawable, therefore they can be u
      rotator.setInterpolator(new LinearInterpolator());
      rotator.start();
 ```
+
+## Sample app
+
+A small sample app is included. It's not in the Play Store, but here's a screenshot. You can click
+it for the full size version.
+
+[![Screenshot][thumb]][large]
+
+[thumb]: https://raw.githubusercontent.com/barend/android-iconfont/master/example/Font-Icon-Demo_framed-small.png
+[large]: https://raw.githubusercontent.com/barend/android-iconfont/master/example/Font-Icon-Demo_framed.png
 
 # Alternatives
 
