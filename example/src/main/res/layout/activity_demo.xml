@@ -1,0 +1,122 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFEEEEEE"
+    android:fillViewport="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:scrollbarStyle="outsideOverlay"
+    tools:context=".Demo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_spacing"
+            android:background="@drawable/card"
+            android:padding="@dimen/card_padding"
+            android:text="@string/menu_buttons" />
+
+        <TextView
+            android:id="@+id/compound_drawables"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_spacing"
+            android:background="@drawable/card"
+            android:padding="@dimen/card_padding"
+            android:text="@string/compound_drawables" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_spacing"
+            android:background="@drawable/card"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/card_padding">
+
+            <ImageView
+                android:id="@+id/image_no_intrinsic"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="@dimen/card_inner_spacing"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/label_no_intrinsic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/image_no_intrinsic"
+                android:text="@string/no_intrinsic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_spacing"
+            android:background="@drawable/card"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/card_padding">
+
+            <ImageView
+                android:id="@+id/image_center"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="@dimen/card_inner_spacing"
+                android:background="@android:color/white"
+                android:scaleType="center" />
+
+            <TextView
+                android:id="@+id/label_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/image_center"
+                android:text="@string/center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_spacing"
+            android:background="@drawable/card"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/card_padding">
+
+            <ImageView
+                android:id="@+id/image_fit_end"
+                android:layout_width="120dp"
+                android:layout_height="90dp"
+                android:layout_marginBottom="@dimen/card_inner_spacing"
+                android:background="#FFA9B1FF"
+                android:scaleType="fitEnd" />
+
+            <TextView
+                android:id="@+id/label_fit_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_spacing"
+                android:labelFor="@id/image_fit_end"
+                android:text="@string/fit_end" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/font_awesome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/card_padding"
+            android:text="@string/font_awesome" />
+    </LinearLayout>
+</ScrollView>

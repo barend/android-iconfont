@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="action_rotate">Rotate</string>
+    <string name="action_github">GitHub</string>
+    <string name="app_name">Android-IconFont</string>
+    <string name="center">The preceding ImageView is 120x120dp and has its scaleType set to center. The IconFontDrawable inside it is 60x60dp in size.</string>
+    <string name="compound_drawables">This is a TextView with four compound drawables with intrinsic size 8dp.</string>
+    <string name="fit_end">The preceding ImageView is 120x90dp. Its drawable has an intrinsic size of 60x60dp, a rotation of -6 degrees and an alpha of 20%. The ScaleType of the ImageView is set to fitEnd, which means the scaling is done by the ImageView, not by the drawable. Also note that if you\'re going to use rotation, it\'s wise to set some padding, or the glyph will get cropped as you can see.</string>
+    <string name="font_awesome">The icons on this screen are part of the FontAwesome library. Tap here to visit the homepage.</string>
+    <string name="menu_buttons">The action buttons have a 32dp size of which 24dp is drawable (it has a 4dp padding). One of them will take you to GitHub, the other will start spinning if you press it on Honeycomb or newer.</string>
+    <string name="no_intrinsic">Above is a 120x120dp ImageView where the drawable has no intrinsic bounds set. It sizes its icon to fill the entire view. It uses a color state list for the pressed state.</string>
+    <string name="toast_rotation">This button doesn\'t do anything.</string>
+
+</resources>
