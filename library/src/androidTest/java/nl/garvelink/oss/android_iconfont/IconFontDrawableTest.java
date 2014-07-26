@@ -40,12 +40,12 @@ public class IconFontDrawableTest extends InstrumentationTestCase {
 
     @LargeTest
     public void testSimpleColorAndAlpha() {
-        IconFontDrawable drawable = new IconFontDrawable(null, 'A', 0xFF112233);
+        IconFontDrawable drawable = new IconFontDrawable(null, 'A', 0xEE112233);
         CountingDrawableCallback callback = new CountingDrawableCallback(drawable);
         drawable.setCallback(callback);
         // Check initial state.
         assertFalse(drawable.isStateful());
-        assertEquals("ff112233", Integer.toHexString(drawable.getRenderingColor()));
+        assertEquals("ee112233", Integer.toHexString(drawable.getRenderingColor()));
         assertEquals(0, callback.getInvalidateCount());
         // Set alpha to new value, color is kept.
         drawable.setAlpha(0x76);
@@ -55,14 +55,14 @@ public class IconFontDrawableTest extends InstrumentationTestCase {
         drawable.setColor(0xFF998877);
         assertEquals("76998877", Integer.toHexString(drawable.getRenderingColor()));
         assertEquals(2, callback.getInvalidateCount());
-        // Set color to current value, callback is not invoked.
-        drawable.setColor(0xFF998877);
-        assertEquals("76998877", Integer.toHexString(drawable.getRenderingColor()));
-        assertEquals(2, callback.getInvalidateCount());
-        // Set alpha to current value, callback is not invoked.
-        drawable.setAlpha(0x76);
-        assertEquals("76998877", Integer.toHexString(drawable.getRenderingColor()));
-        assertEquals(2, callback.getInvalidateCount());
+        // Unset alpha value, opacity from original color is used.
+        drawable.unsetAlpha();
+        assertEquals("ff998877", Integer.toHexString(drawable.getRenderingColor()));
+        assertEquals(3, callback.getInvalidateCount());
+        // Set alpha to current value encoded in color, callback is not invoked.
+        drawable.setAlpha(0xFF);
+        assertEquals("ff998877", Integer.toHexString(drawable.getRenderingColor()));
+        assertEquals(3, callback.getInvalidateCount());
         // Check unrelated callbacks.
         assertEquals(0, callback.getScheduleCount());
         assertEquals(0, callback.getUnscheduleCount());
@@ -77,19 +77,32 @@ public class IconFontDrawableTest extends InstrumentationTestCase {
                 .build();
         CountingDrawableCallback callback = new CountingDrawableCallback(drawable);
         drawable.setCallback(callback);
+        // Check initial state.
         assertTrue(drawable.isStateful());
         assertEquals("ff000000", Integer.toHexString(drawable.getRenderingColor()));
         assertEquals(0, callback.getInvalidateCount());
+        assertEquals(160, drawable.getIntrinsicHeight());
+        assertEquals(160, drawable.getIntrinsicWidth());
+        // Set alpha to new value, color is kept.
         drawable.setAlpha(0x76);
         assertEquals("76000000", Integer.toHexString(drawable.getRenderingColor()));
         assertEquals(1, callback.getInvalidateCount());
+        // Set a color, should have no effect because the state list prevails.
         drawable.setColor(0xFF998877);
         assertEquals("setColor() should have no effect when a stateList is present", "76000000", Integer.toHexString(drawable.getRenderingColor()));
+        // Force a state change. The alpha value is applied to the new state.
         drawable.setState(ViewStates.focused());
         assertEquals("76ffff00", Integer.toHexString(drawable.getRenderingColor()));
-        assertEquals(160, drawable.getIntrinsicHeight());
-        assertEquals(160, drawable.getIntrinsicWidth());
         assertEquals(2, callback.getInvalidateCount());
+        // Unset the alpha value, the transparency encoded in the state color is used.
+        drawable.unsetAlpha();
+        assertEquals("ffffff00", Integer.toHexString(drawable.getRenderingColor()));
+        assertEquals(3, callback.getInvalidateCount());
+        // Unset the focused state, color reverts to unfocused.
+        drawable.setState(ViewStates.empty());
+        assertEquals("ff000000", Integer.toHexString(drawable.getRenderingColor()));
+        assertEquals(4, callback.getInvalidateCount());
+        // Check unrelated callbacks.
         assertEquals(0, callback.getScheduleCount());
         assertEquals(0, callback.getUnscheduleCount());
     }

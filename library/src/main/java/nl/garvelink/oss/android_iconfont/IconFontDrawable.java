@@ -39,9 +39,12 @@ import android.util.TypedValue;
 public class IconFontDrawable extends Drawable {
 
     /**
-     * Configurable: alpha channel for the foreground color (default opaque).
+     * Configurable: alpha channel for the foreground color (default unset). If not set, the alpha
+     * value from the {@link #color} or {@link #colorStateList} is used. Once set, this overrides
+     * the alpha information in the assigned color, including with state changes. The unset value
+     * is {@code -1}.
      */
-    private int alpha = 0xFF;
+    private int alpha = -1;
 
     /**
      * Configurable: foreground color, simple case (default black). Any changes to {@link #alpha}
@@ -192,6 +195,14 @@ public class IconFontDrawable extends Drawable {
             this.alpha = newAlpha;
             computeRenderingColor();
         }
+    }
+
+    /**
+     * Unsets the alpha value, thus reverting the transparency to the level encoded in the glyph
+     * color value. This method triggers a repaint if needed.
+     */
+    public void unsetAlpha() {
+        setAlpha(-1);
     }
 
     /**
@@ -369,7 +380,10 @@ public class IconFontDrawable extends Drawable {
         } else {
             newColor = color;
         }
-        final int colorWithAlpha = (newColor & 0x00FFFFFF) | (alpha << 24);
+        int colorWithAlpha = newColor;
+        if (alpha >= 0) {
+            colorWithAlpha = (newColor & 0x00FFFFFF) | (alpha << 24);
+        }
         if (colorWithAlpha != renderingColor) {
             renderingColor = colorWithAlpha;
             glyphPaint.setColor(renderingColor);
@@ -415,7 +429,7 @@ public class IconFontDrawable extends Drawable {
      */
     public static class Builder {
         private final Resources resources;
-        private int alpha = 0xFF;
+        private int alpha = -1;
         private int color;
         private ColorStateList colorStateList;
         private char glyph;
@@ -435,6 +449,15 @@ public class IconFontDrawable extends Drawable {
          */
         public Builder setAlphaValue(int alpha) {
             this.alpha = alpha;
+            return this;
+        }
+
+        /**
+         * Resets the transparency value defined by {@link #setAlphaValue(int)} or
+         * {@link #setOpacity(float)}.
+         */
+        public Builder unsetAlphaValue() {
+            this.alpha = -1;
             return this;
         }
 
