@@ -349,7 +349,12 @@ public class IconFontDrawable extends Drawable {
         drawableArea.set(getBounds());
         drawableArea.inset(padding, padding);
         glyphPaint.getTextPath(glyph, 0, 1, 0, 0, glyphPath);
+        // Add an extra path point to fix the icon remaining blank on a Galaxy Note 2 running 4.1.2.
         glyphPath.computeBounds(glyphPathBounds, false);
+        final float centerX = glyphPathBounds.centerX();
+        final float centerY = glyphPathBounds.centerY();
+        glyphPath.moveTo(centerX, centerY);
+        glyphPath.lineTo(centerX + 0.001f, centerY + 0.001f);
         final float areaWidthF = (float) drawableArea.width();
         final float areaHeightF = (float) drawableArea.height();
         final float scaleX = areaWidthF / glyphPathBounds.width();
