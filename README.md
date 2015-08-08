@@ -6,7 +6,8 @@ Icon font support for Android.
 
 I wrote this because I wanted to play with the relevant API's, mainly I wanted to try text scaling
 using a Path. It works and the code is pretty clean, so you should be okay if you use it. I don't
-plan to actively maintain this library.
+plan to actively maintain this library. I do know of a 1M+ users app that uses this, so it seems
+robust enough for serious production use.
 
 ## Why use an icon font?
 
@@ -37,6 +38,8 @@ are set to. In some cases, this will be zero.
 
 If the assigned bounds is not square, the glyph will max out the shorter axis and center in the
 longer axis. It is possible to assign a `padding` to ensure some space around the glyph.
+
+If you have recurring use of a small set of font icons, consider caching the drawables.
 
 ## Sample code
 
@@ -116,7 +119,7 @@ Receives frequent updates              | nope
 # Copyright and License
 
 ```text
-Copyright 2014, Barend Garvelink
+Copyright 2015, Barend Garvelink
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
