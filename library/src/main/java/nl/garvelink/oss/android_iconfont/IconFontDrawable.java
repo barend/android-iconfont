@@ -29,6 +29,13 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
+import android.support.annotation.FloatRange;
+import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.TypedValue;
 
 /**
@@ -36,6 +43,7 @@ import android.util.TypedValue;
  * content area defined by its bounds and its padding. The glyph is scaled so that its largest
  * dimension fills this area. The smaller dimension is then centered.
  */
+@SuppressWarnings("unused")
 public class IconFontDrawable extends Drawable {
 
     /**
@@ -44,12 +52,14 @@ public class IconFontDrawable extends Drawable {
      * the alpha information in the assigned color, including with state changes. The unset value
      * is {@code -1}.
      */
+    @IntRange(from = -1, to = 255)
     private int alpha = -1;
 
     /**
      * Configurable: foreground color, simple case (default black). Any changes to {@link #alpha}
      * are reflected in this variable.
      */
+    @ColorInt
     private int color = Color.BLACK;
 
     /**
@@ -160,7 +170,7 @@ public class IconFontDrawable extends Drawable {
      * @param glyph    the glyph to use.
      * @param color    the color in which to render the glyph.
      */
-    public IconFontDrawable(final Typeface typeface, final char glyph, final int color) {
+    public IconFontDrawable(final Typeface typeface, final char glyph, @ColorInt final int color) {
         this(typeface);
         this.glyph[0] = glyph;
         this.color = color;
@@ -175,7 +185,7 @@ public class IconFontDrawable extends Drawable {
      * @param color         the color in which to render the glyph.
      * @param intrinsicSize the intrinsic size in pixels.
      */
-    public IconFontDrawable(final Typeface typeface, final char glyph, final int color, final int intrinsicSize) {
+    public IconFontDrawable(final Typeface typeface, final char glyph, @ColorInt final int color, final int intrinsicSize) {
         this(typeface);
         this.glyph[0] = glyph;
         this.color = color;
@@ -187,9 +197,10 @@ public class IconFontDrawable extends Drawable {
      * Sets the alpha value, triggering a repaint if the value changed.
      *
      * @param alpha an alpha value.
+     * @see #unsetAlpha()
      */
     @Override
-    public void setAlpha(int alpha) {
+    public void setAlpha(@IntRange(from = 0, to = 255) int alpha) {
         final int newAlpha = (alpha & 0xFF);
         if (this.alpha != newAlpha) {
             this.alpha = newAlpha;
@@ -213,7 +224,7 @@ public class IconFontDrawable extends Drawable {
      * @see #setAlpha(int)
      * @see #setColor(android.content.res.ColorStateList)
      */
-    public void setColor(int color) {
+    public void setColor(@ColorInt int color) {
         final int newColor = (color & 0x00FFFFFF);
         if (this.color != newColor) {
             this.color = newColor;
@@ -228,7 +239,7 @@ public class IconFontDrawable extends Drawable {
      * @see #setAlpha(int)
      * @see #setColor(int)
      */
-    public void setColor(ColorStateList stateColors) {
+    public void setColor(@Nullable ColorStateList stateColors) {
         this.colorStateList = stateColors;
         computeRenderingColor();
     }
@@ -411,7 +422,7 @@ public class IconFontDrawable extends Drawable {
      * @param context a context from which to resolve resources.
      * @return a builder.
      */
-    public static Builder builder(Context context) {
+    public static Builder builder(@NonNull Context context) {
         return new Builder(context.getResources());
     }
 
@@ -421,7 +432,7 @@ public class IconFontDrawable extends Drawable {
      * @param resources from which to resolve resources.
      * @return a builder.
      */
-    public static Builder builder(Resources resources) {
+    public static Builder builder(@NonNull Resources resources) {
         return new Builder(resources);
     }
 
@@ -443,7 +454,7 @@ public class IconFontDrawable extends Drawable {
         private float rotation;
         private Typeface typeface;
 
-        Builder(Resources res) {
+        Builder(@NonNull Resources res) {
             this.resources = res;
         }
 
@@ -452,7 +463,7 @@ public class IconFontDrawable extends Drawable {
          *
          * @param alpha an alpha value.
          */
-        public Builder setAlphaValue(int alpha) {
+        public Builder setAlphaValue(@IntRange(from = 0, to = 255) int alpha) {
             this.alpha = alpha;
             return this;
         }
@@ -471,7 +482,7 @@ public class IconFontDrawable extends Drawable {
          *
          * @param color a color value. The alpha bits are ignored.
          */
-        public Builder setColorValue(int color) {
+        public Builder setColorValue(@ColorInt int color) {
             this.color = color;
             this.colorStateList = null;
             return this;
@@ -482,7 +493,7 @@ public class IconFontDrawable extends Drawable {
          *
          * @param colorStateList color statelist.
          */
-        public Builder setColorStateList(ColorStateList colorStateList) {
+        public Builder setColorStateList(@Nullable ColorStateList colorStateList) {
             this.colorStateList = colorStateList;
             return this;
         }
@@ -492,7 +503,7 @@ public class IconFontDrawable extends Drawable {
          *
          * @param colorResId {@code R.color} resource ID.
          */
-        public Builder setColorResource(int colorResId) {
+        public Builder setColorResource(@ColorRes int colorResId) {
             this.color = resources.getColor(colorResId);
             this.colorStateList = null;
             return this;
@@ -503,7 +514,7 @@ public class IconFontDrawable extends Drawable {
          *
          * @param colorResId {@code R.color} resource ID.
          */
-        public Builder setColorStateListResource(int colorResId) {
+        public Builder setColorStateListResource(@ColorRes int colorResId) {
             this.colorStateList = resources.getColorStateList(colorResId);
             return this;
         }
@@ -542,7 +553,7 @@ public class IconFontDrawable extends Drawable {
          *
          * @param dimensionResId {@code R.dimen} resource ID.
          */
-        public Builder setIntrinsicSizeResource(int dimensionResId) {
+        public Builder setIntrinsicSizeResource(@DimenRes int dimensionResId) {
             this.intrinsicSize = resources.getDimensionPixelSize(dimensionResId);
             return this;
         }
@@ -572,7 +583,7 @@ public class IconFontDrawable extends Drawable {
          *
          * @param opacity an opacity percentage.
          */
-        public Builder setOpacity(float opacity) {
+        public Builder setOpacity(@FloatRange(from = 0.0, to = 1.0) float opacity) {
             this.alpha = Math.round(opacity * 255);
             return this;
         }
@@ -601,7 +612,7 @@ public class IconFontDrawable extends Drawable {
          *
          * @param dimensionResId {@code R.dimen} resource ID.
          */
-        public Builder setPaddingResource(int dimensionResId) {
+        public Builder setPaddingResource(@DimenRes int dimensionResId) {
             this.padding = resources.getDimensionPixelSize(dimensionResId);
             return this;
         }
@@ -633,7 +644,7 @@ public class IconFontDrawable extends Drawable {
          *
          * @param typeface the typeface.
          */
-        public Builder setTypeface(Typeface typeface) {
+        public Builder setTypeface(@Nullable Typeface typeface) {
             this.typeface = typeface;
             return this;
         }
