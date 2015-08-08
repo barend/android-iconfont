@@ -24,7 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,7 +41,7 @@ import nl.garvelink.oss.android_iconfont.IconFontDrawable;
 /**
  * Sample usage of {@link nl.garvelink.oss.android_iconfont.IconFontDrawable}.
  */
-public class DemoActivity extends ActionBarActivity {
+public class DemoActivity extends AppCompatActivity {
 
     private static final boolean HAS_ANIMATOR_API = Build.VERSION.SDK_INT >= 11;
 
